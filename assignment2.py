@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1c-E21sV6U_Uu7wmCqEl2cxyJbAyne2H6
 """
 
+# this code was reviewed and corrected by AI (Gemini and ChatGPT)
 import numpy as np
 import pandas as pd
 from xgboost import XGBClassifier
