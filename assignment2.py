@@ -9,36 +9,16 @@ Original file is located at
 
 import numpy as np
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 df = pd.read_csv('https://raw.githubusercontent.com/dustywhite7/Econ8310/master/AssignmentData/assignment3.csv')
 
-keepcols = ['Total','meal']
-df = df[keepcols]
-
-
-def model():
-  y = df['meal']
-  x = df[['Total']]
-  #decision tree model
-  dtc = DecisionTreeClassifier(max_depth=5)
-  dtc.fit(x,y)
-  y_pred = dtc.predict(x)
-  print("Decision Tree Accuracy {}%.".format(accuracy_score(y,y_pred)*100))
-  #random forest model
-  x,xt,y,yt = train_test_split(x,y,test_size=0.2)
-  rfc = RandomForestClassifier(n_estimators=100,n_jobs=-1,max_depth=5)
-  rfc.fit(x,y)
-  y_pred = rfc.predict(xt)
-  print("Random Forest Accuracy {}%.".format(accuracy_score(yt,y_pred)*100))
-  #boosted trees
-  xgb = XGBClassifier(n_estimators=100,max_depth=5,learning_rate=0.5,objective='binary:logistic')
-  xgb.fit(x,y)
-  y_pred = xgb.predict(xt)
-  print("XGBoost Accuracy {}%.".format(accuracy_score(yt,y_pred)*100))
-
-model()
+y = df['meal']
+x = df[['Total']]
+x,xt,y,yt = train_test_split(x,y,test_size=0.2)
+model = XGBClassifier(n_estimators=100,max_depth=5,learning_rate=0.5,objective='binary:logistic')
+modelFit = model.fit(x,y)
+pred = model.predict(xt)
+print("XGBoost Accuracy {}%.".format(accuracy_score(yt,pred)*100))
